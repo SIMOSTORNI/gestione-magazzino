@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<!-- TODO: Documentazione -->
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Gestione Ristorante</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.css}"/>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js}"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+</head>
+<body>
+
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Gestione Magazzino</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                        <li><a class="dropdown-item active" th:href="@{/magazzino/fornitori}">Fornitori</a></li>
+                        <li><a class="dropdown-item" th:href="@{/magazzino/prodotti}">Prodotti</a></li>
+                        <li><a class="dropdown-item" th:href="@{/magazzino/ordini}">Ordini</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<br>
+<div class="container-fuild">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+            <h1 class="text-center">Fornitore</h1>
+            <div class="card-body">
+                <h6 th:text="'partita iva: ' + ${fornitore.piva}"></h6>
+                <h6 th:text="'nome aziendaAbstract: ' + ${fornitore.nomeAzienda}"></h6>
+                <h6 th:text="'sede legale: ' + ${fornitore.sedeLegale}"></h6>
+                <h6 th:text="'citta\': ' + ${fornitore.citta}"></h6>
+                <h4>Contatto</h4>
+                <form th:action="@{/magazzino/fornitori/edit/{id}/update_contatto/{contatto_id} (contatto_id=${contattoObj.getId()},id=${fornitore.getPiva()})}" th:object="${contattoObj}" method="POST">
+                    <div class="form-group">
+                        <input type="hidden" th:field="*{id}" class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                        <label> tipologia </label>
+                        <select th:field="*{tipologia}" class="form-select"
+                                aria-label="Default select example">
+                            <option th:value="${''}" th:text="${''}"></option>
+                            <option th:value="${tipologiaObj.TELEFONO.toString()}" th:text="${tipologiaObj.TELEFONO.toString()}"></option>
+                            <option th:value="${tipologiaObj.EMAIL.toString()}" th:text="${tipologiaObj.EMAIL.toString()}"></option>
+                            <option th:value="${tipologiaObj.FAX.toString()}" th:text="${tipologiaObj.FAX.toString()}"></option>
+                        </select>
+                    </div>
+                    <br>
+
+                    <div class="form-group">
+                        <label> suffisso </label>
+                        <select th:field="*{suffix}" class="form-select"
+                                aria-label="Default select example">
+                            <option th:value="${''}" th:text="${''}"></option>
+                            <option th:value="${suffixObj.PRINCIPALE.name()}" th:text="${suffixObj.PRINCIPALE.name()}"></option>
+                            <option th:value="${suffixObj.SECONDARIO.name()}" th:text="${suffixObj.SECONDARIO.name()}"></option>
+                            <option th:value="${suffixObj.LAVORO.name()}" th:text="${suffixObj.LAVORO.name()}"></option>
+                            <option th:value="${suffixObj.PERSONALE.name()}" th:text="${suffixObj.PERSONALE.name()}"></option>
+                        </select>
+                    </div>
+                    <br>
+
+                    <div class="form-group">
+                        <label for="contatto"> contatto </label>
+                        <input
+                                type="text"
+                                id="contatto"
+                                th:field="*{contatto}"
+                                class="form-control"
+                        />
+                    </div>
+                    <br>
+                    <div class="footer-body">
+                        <button type="submit" class="btn btn-primary"> Aggiorna </button>
+                    </div>
+
+                    <nav class="nav link">
+                        <a class="navbar-brand" th:href="@{/magazzino/fornitori}">
+                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAZlBMVEX///8AAACamprk5OSUlJQqKiqVlZUnJyeRkZHi4uIsLCwlJSX29vaNjY0iIiLW1tbt7e2GhoakpKTExMQ9PT2srKxISEhxcXFaWlrZ2dkyMjJiYmK6urpoaGgYGBjNzc1PT096enq6MCcZAAAD5klEQVR4nO3di3bbIAwGYGlO03pb2126W3fr3v8lV4cmTRxjIIGj/PL/PYF0dAQYbCxCREREREREREREREREREREi3f/3jqCxm5+WkfQVn+l1iG0tVZ9Yx1DS91bVdclXD3np7+so2hnU0B9tA6jnU0BVe+t42iluwoJup0pXgqo+sE6kjZCBw4+WofSxlp3rENport+TfCTdTAtrFRdl7B73E/ws3U49a3389MH63Cq2+/AwQ/rgGq7OcxPf1sHVNnrHLjl7Ml+Pc5Pb61Dqmq7CnU7U4w7cPDFOqiKxkPoxh/rqCo67sCBn8n+eAjd+GodVzWryfxUe+vAKuneRRL8Zh1ZJbECepnsp+bAFyvr2KqIF9DHZD85B255mOznCqh31tGdb6YDB3+t4zvb9CJm58k6vnMlCqjaWUd4ptkOHPyzjvA8/dwQGmBP9skCgh/4JjtwYB3kORJDaAB84JtVQOQD34wOHMAe+OYVUPW7daCnyurAAeiBb2QnZgLogW9mBw6sQz3J7HPgCOSBb3YHgpYwvwMHgHvABR2oiAe+ZQUEPPAtKyDeHnBpAVVv3xgq358tLaC55gU0V5Zg0Rx4IYoKWLCIuRwFCcJ1YJBfQLwODJwXUHMzhC2gZmY49U4MjJwCZu7EXKh0gohz4L5kAYE7MPDcgcF8ASEXMSNzCeLOgfs8d2DguQMDzx0YeO7AwHMHBhMJoi9iRo4LiL0KPeZ2CN0ZJfhgHU99i6uhq5kwcD4ZamQ+dDWcTmXoq4zTGUp3Zx1YNZEMHQ2q0QzdrE7jGXrpxrkM498uIZnN0EU3JjJ0MDemMsR/XExniL5SzcgQvBuzMoTuxrwMkcuYmyHuEic7Q9glTkGGOV82XaCSDDHLWJYh4qBamCHgoFqc4QllBHu/9IQyor0jLOVlhHvPW/y/qy+lDxyA31tIYRmtgz1NyZ4q5HdPUjSoWod6qj57UAX9/lAKuhH0G1LJH1RhvwOW7G6E/Zb7WZ+1NQ78Pb5kdiPwnQqygHsxxP/dJpLVjdj300jGoAp+x5As4J4oSXbjk3V8FSRWqvj3tUmiGx3cuScLuDdR5stoHVslM4Pq2jq2WuJlhJ/2t6K7OID7wzGxMnq5C1oWcJ+3xJY4Lqb9rck34zzdqy/+/40g091oHVNtx93o6x8lMrXEcTPt73j/V5AcL3EQj4VTDrsR8lg45XBQxTwWTjnoRutg2tjfU0U9Fk7x/g9LWcB/SMX/v2RlAf8Dlt2ginwsnNJ7/y+3+P+3urxsjVsH0dgK/1g4pb/2XsTnQdXzjBHc+3vaJyIiIiIiIiIiIiIiIiIiopT/fiw7Dn+aUYoAAAAASUVORK5CYII="
+                                 width="30" height="35" >
+                        </a>
+                        <a class="navbar-brand" th:href="@{/magazzino/forniture}">
+                            <img src="data:image/png;base64,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"
+                                 width="30" height="35" >
+                        </a>
+
+                    </nav>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

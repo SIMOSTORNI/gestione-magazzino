@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<!-- TODO: Documentazione -->
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Creazione Account</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.css}"/>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js}"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            text-align: center;
+            height: 100vh;
+            background-image: url("https://cdn.pixabay.com/photo/2020/03/25/21/05/pizza-4968645_1280.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            flex-direction: column;
+            justify-content: center;
+        }
+        h2{
+            color: white;
+        }
+        #login {
+            background-color: darkgrey;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+
+        }
+
+        #titolologin {
+            text-align: center;
+            margin-bottom: 20px;
+            background-color: #4caf50; /* Colore verde per il titolo */
+            color: white;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: white;
+        }
+
+        .testo {
+            width: 150px;
+            padding: 8px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+
+        .button {
+            background-color: #ff0000; /* Colore verde per i pulsanti */
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 150px;
+        }
+
+        .button:hover {
+            background-color: #ff0000;
+        }
+        .username{
+            width: 150px;
+        }
+        .email{
+            width:150px;
+        }
+        .password{
+            width: 150px;
+        }
+        #register {
+            text-decoration: none;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+<h2>Registrazione Account</h2>
+<div th:align="center">
+    <form action="#" class="formlogin" method="post">
+        <label>Username:</label>
+        <input type="text" name="username" class="testo" placeholder="Username..." required/><br>
+        <label>Password:</label>
+        <input type="password" name="password" class="testo" placeholder="Password..." required/><br>
+        <label>Email:</label>
+        <input type="email" name="email" class="testo" placeholder="Email..." required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" title="Inserisci un indirizzo email valido."/><br>
+        <input type="submit" class="button" name="submit" value="Registrati" />
+    </form>
+</div>
+
+</body>
+</html>
